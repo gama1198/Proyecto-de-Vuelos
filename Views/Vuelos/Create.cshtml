@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model VuelosApp.Models.ViewModels.CreateFlightViewModel
+
+<div class="container-fluid">
+    <h2>Creación de un Vuelo</h2>
+
+    @if(Model.Errors != null)
+    {
+        <div class="alert alert-danger" role="alert">
+          <ul>
+                @foreach(string error in Model.Errors)
+                {
+                    <li>@error</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <form action="/vuelos/save" method="POST">
+        <div class="form-group">
+            <label for="date">Fecha vuelo</label>
+            <input name="date" type="datetime" class="form-control" placeholder="09/06/2022 13:40">
+        </div>
+        <div class="form-group">
+            <label for="origin">Ciudad de origen</label>
+            <select class="form-control" name="origin">
+               @foreach (string city in Model.Cities)
+               {
+                    <option>@city</option>     
+               }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="destination">Ciudad de Destino</label>
+            <select class="form-control" name="destination">
+               @foreach (string city in Model.Cities)
+               {
+                    <option>@city</option>     
+               }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="numFlight">Número de vuelo</label>
+            <input name="numFlight" type="text" class="form-control" placeholder="AB2030">
+        </div>
+        <input type="hidden" name="flightType" value="@ViewData["flightType"]"/>
+        <div class="form-group">
+            <label for="origin">Estado del vuelo</label>
+            <select class="form-control" name="state">
+                @foreach (string state in Model.States)
+                {
+                    <option>@state</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+
+</div>

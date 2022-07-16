@@ -1,0 +1,201 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model VuelosApp.Models.ViewModels.MultiTypeFlightsViewModel
+
+<div class="container-fluid">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="nacionales-tab" data-toggle="tab" href="#nacionales" role="tab" aria-controls="nacionales" aria-selected="true">Nacionales</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="internacionales-tab" data-toggle="tab" href="#internacionales" role="tab" aria-controls="internacionales" aria-selected="false">Internacionales</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="nacionales" role="tabpanel" aria-labelledby="nacionales-tab">
+
+            <div class="d-block text-center m-5">
+                <h3>Vuelos Nacionales</h3>
+            </div>
+            <div class="card mb-1">
+                <div class="card-header">
+                    Filtrar
+                </div>
+                <div class="card-body">
+                    <form action="/vuelos/FindFlights" method="GET">
+                        <div class="row mb-1">
+                            <div class="col-1">
+                                <label>Origen:</label>
+                            </div>
+                            <div class="col-4">
+                                <select class="form-control d-inline-block" name="origin">
+                                    @foreach (var item in Model.NationalCities)
+                                    {
+                                        <option>@item</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-1">
+                                <label>Destino:</label>
+                            </div>
+                            <div class="col-4">
+                                <select class="form-control" name="destination">
+                                    @foreach (var item in Model.NationalCities)
+                                    {
+                                        <option>@item</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" value="@FlightType.National" name="flighType" />
+                        <div class="row">
+                            <div class="col-5 text-right">
+                                <button type="submit" class="btn btn-dark m-1">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @if (Model != null)
+            {
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>
+                                Fecha/Hora
+                            </th>
+                            <th>
+                                Origen
+                            </th>
+                            <th>
+                                Destino
+                            </th>
+                            <th>
+                                Nº Vuelo
+                            </th>
+                            <th>
+                                Estado
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.NationalFlights)
+                        {
+                            <tr>
+                                <td>@item.Date.ToShortDateString() / @item.Date.ToShortTimeString()</td>
+                                <td>@item.Origin</td>
+                                <td>@item.Destination</td>
+                                <td>@item.NumFlight</td>
+                                <td>@item.State</td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+                <div class="text-right">
+                    <p>Número total de vuelos: @Model.NationalFlights.Count</p>
+                </div>
+            }
+            else
+            {
+                <h5>No Existen vuelos</h5>
+            }
+        </div>
+        <div class="tab-pane fade" id="internacionales" role="tabpanel" aria-labelledby="internacionales-tab">
+            <div class="d-block text-center m-5">
+                <h3>Vuelos Internacionales</h3>
+            </div>
+            <div class="card mb-1">
+                <div class="card-header">
+                    Filtrar
+                </div>
+                <div class="card-body">
+                    <form action="/vuelos/FindFlights" method="GET">
+                        <div class="row mb-1">
+                            <div class="col-1">
+                                <label>Origen:</label>
+                            </div>
+                            <div class="col-4">
+                                <select class="form-control d-inline-block" name="origin">
+                                    @foreach (var item in Model.InternactionalCities)
+                                    {
+                                        <option>@item</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-1">
+                                <label>Destino:</label>
+                            </div>
+                            <div class="col-4">
+                                <select class="form-control" name="destination">
+                                    @foreach (var item in Model.InternactionalCities)
+                                    {
+                                        <option>@item</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" value="@FlightType.National" name="flighType" />
+                        <div class="row">
+                            <div class="col-5 text-right">
+                                <button type="submit" class="btn btn-dark m-1">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @if (Model != null)
+            {
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>
+                                Fecha/Hora
+                            </th>
+                            <th>
+                                Origen
+                            </th>
+                            <th>
+                                Destino
+                            </th>
+                            <th>
+                                Nº Vuelo
+                            </th>
+                            <th>
+                                Estado
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.InternationalFlights)
+                        {
+                            <tr>
+                                <td>@item.Date.ToShortDateString() / @item.Date.ToShortTimeString()</td>
+                                <td>@item.Origin</td>
+                                <td>@item.Destination</td>
+                                <td>@item.NumFlight</td>
+                                <td>@item.State</td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+                <div class="text-right">
+                    <p>Número total de vuelos: @Model.InternationalFlights.Count</p>
+                </div>
+            }
+            else
+            {
+                <h5>No Existen vuelos</h5>
+            }
+        </div>
+    </div>
+</div>
